@@ -1,32 +1,42 @@
 {% set name = "sre_yield" %}
 {% set version = "1.2" %}
 
+
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/google/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: cd6fccf03dc5858a71f02c356fbb9546afd9de0de922898454b85f8955c69ef1
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sre_yield-{{ version }}.tar.gz
+  sha256: e94f1a2a3cbafffe1dcd15c1d54e401a1517e052aa64c7d3164f88dc761d7b8a
 
 build:
   number: 3
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed"
+  noarch: python
+  entry_points:
+    - demo_sre_yield=sre_yield:main
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python
+    - python >=3.6
     - pip
   run:
-    - python
+    - python >=3.6
 
 test:
   imports:
     - sre_yield
+    - sre_yield.tests
+  commands:
+    - pip check
+    - demo_sre_yield --help
+  requires:
+    - pip
 
 about:
   home: https://github.com/google/sre_yield
-  license: Apache 2.0
+  license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE
   summary: 'Python module to generate regular all expression matches'
