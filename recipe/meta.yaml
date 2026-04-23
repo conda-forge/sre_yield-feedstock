@@ -7,11 +7,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sre_yield-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/sre_yield-{{ version }}.tar.gz
   sha256: e94f1a2a3cbafffe1dcd15c1d54e401a1517e052aa64c7d3164f88dc761d7b8a
 
 build:
-  number: 3
+  number: 4
   noarch: python
   entry_points:
     - demo_sre_yield=sre_yield:main
@@ -19,10 +19,10 @@ build:
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -33,6 +33,7 @@ test:
     - demo_sre_yield --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/google/sre_yield
